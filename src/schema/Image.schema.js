@@ -8,10 +8,17 @@ const LogoSchema = mongoose.Schema({
     subTitle: {
         type: String,
         required: true,
+    },
+    type: {
+        type: String,
+        required: true,
+        default: "WebsiteLogo"
     }
 });
 
 const logoModel = mongoose.model('logo', LogoSchema);
 
 module.exports = logoModel;
+
+
 

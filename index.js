@@ -28,7 +28,8 @@ db();
 //Router initation
 const authRouter = require('./src/routes/authRoutes.route');
 app.use('/api', authRouter);
-
+const contentRoutes = require('./src/routes/contentRoutes.route');
+app.use("/seo", contentRoutes);
 
 // Global Error Handler 
 app.use((err, req, res, next) => {
@@ -36,7 +37,7 @@ app.use((err, req, res, next) => {
         success: false,
         message: err.message
     })
-})
+});
 
 // PORT initiation
 const PORT = process.env.PORT;

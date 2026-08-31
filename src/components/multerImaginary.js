@@ -1,5 +1,6 @@
+require('dotenv').config();
 const multer = require('multer');
-const cloudinary = require('cloudinary');
+const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 cloudinary.config({
@@ -8,17 +9,16 @@ cloudinary.config({
     api_secret: `${process.env.CLOUDINARY_API_SECRET}`
 });
 
-const IMAGE_TYPE = ['jpeg', 'jpg', 'avif', 'gif'];
+const IMAGE_TYPE = ['jpeg', 'jpg', 'avif', 'gif', 'png'];
 
-const storage = CloudinaryStorage({
+const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
         folder: "github_clone",
         allowed_formats: IMAGE_TYPE,
-        // format: async (req, file) => 'png',
-        public_id: (req, res) => Date.now(),
+        public_id: (req, res) => `${Date.now()}`,
     }
-})
+});
 
 const imageUpload = multer({ storage: storage });
 

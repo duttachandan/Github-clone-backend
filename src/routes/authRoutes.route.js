@@ -7,3 +7,5 @@ const router = express.Router();
 router.get('/', WrapAsync(HomeController.HomePath));
 
 module.exports = router;
+
+
