@@ -25,9 +25,11 @@ app.use(cors({
 const db = require('./src/config/db');
 db();
 
-//Router initation
+//Router initiation
 const authRouter = require('./src/routes/authRoutes.route');
 app.use('/api', authRouter);
+
+//Content initiation
 const contentRoutes = require('./src/routes/contentRoutes.route');
 app.use("/seo", contentRoutes);
 

@@ -4,8 +4,8 @@ const WrapAsync = require('../utils/WrapAsync');
 const ContentController = require('../controllers/Content.controller');
 const multerImaginary = require('../components/multerImaginary');
 
-router.get('/', WrapAsync(ContentController.updateLogo));
-router.post('/logo', multerImaginary.single('image'), WrapAsync(ContentController.getLogo));
+router.get('/', WrapAsync(ContentController.getLogo));
+router.post('/logo', multerImaginary.single('image'), WrapAsync(ContentController.updateLogo));
 
 
 module.exports = router;

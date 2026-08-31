@@ -3,28 +3,36 @@ const logoModel = require('../schema/Image.schema')
 
 
 class ContentController {
-    async getLogo(req, res) {
+    async updateLogo(req, res) {
         const { subTitle } = req.body;
         const { path } = req.file;
         if (!path || !subTitle) {
             throw new ErrorResponse(404, "Image or Title is not defined");
         }
         try {
-            const newLogo = new logoModel({
-                logo: path,
-                subTitle: subTitle
+            const newLogoInsert = await logoModel.replaceOne(
+                { type: "WebsiteLogo" },
+                {
+                    logo: path,
+                    subTitle: subTitle,
+                },
+                {
+                    upsert: true
+                }
+            );
+            res.json({
+                success: true,
+                data: newLogoInsert
             });
-            const response = await newLogo.save();
-            res.json(response);
         } catch (error) {
             throw new ErrorResponse(404, error.message);
         }
     }
-    async updateLogo(req, res) {
+    async getLogo(req, res) {
         try {
-            // const response = 
+            const response = await logoModel.find({});
             res.json({
-                message: "Working Fine",
+                data: response,
                 success: true,
             });
         } catch (error) {
