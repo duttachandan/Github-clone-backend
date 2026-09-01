@@ -5,6 +5,14 @@ const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
 
+//express session
+const session = require('express-session');
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+}));
+
 // cookie parser initiation
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
@@ -25,13 +33,22 @@ app.use(cors({
 const db = require('./src/config/db');
 db();
 
-//Router initiation
-const authRouter = require('./src/routes/authRoutes.route');
-app.use('/api', authRouter);
+// Passport Initiation
+const passport = require('./src/components/Passport');
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Api initiation
+// const authRouter = require('./src/routes/authRoutes.route');
+// app.use('/api', authRouter);
 
 //Content initiation
 const contentRoutes = require('./src/routes/contentRoutes.route');
 app.use("/seo", contentRoutes);
+
+//Auth initiation
+const authRoutes = require('./src/routes/authRoutes.route');
+app.use("/auth", authRoutes);
 
 // Global Error Handler 
 app.use((err, req, res, next) => {
