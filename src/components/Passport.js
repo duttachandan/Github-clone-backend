@@ -14,14 +14,7 @@ passport.use(
                 if (existingUser) {
                     return done(null, existingUser);
                 }
-                const newUser = new userSchema({
-                    googleId: profile.id,
-                    name: profile.displayName,
-                    email: profile.emails[0].value,
-                    ProfilePicture: profile.photos[0].value,
-                });
-                await newUser.save();
-                done(null, newUser);
+                done(null, profile._json);
             } catch (error) {
                 done(error, null);
             }

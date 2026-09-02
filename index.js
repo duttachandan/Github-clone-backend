@@ -17,6 +17,9 @@ app.use(session({
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+
 // Intiating HELMET
 const helmet = require('helmet');
 app.use(helmet());
